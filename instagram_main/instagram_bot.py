@@ -12,8 +12,7 @@ from instagram_main.modules import check_if_element_by_css, read_hash_tag, add_c
 current_date_time = "nothing"
 
 # login info
-username = get_cred_from_lasspass("Instagram")["user"]
-password = get_cred_from_lasspass("Instagram")["pass"]
+username, password = get_cred_from_lasspass("Instagram")
 
 
 # selenium page controller or webdriver

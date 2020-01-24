@@ -63,15 +63,5 @@ def check_if_element_by_css(webdriver, selector):
 
 
 
-thumbnail = "#react-root > section > main > article > div.EZdmt > div > div > div:nth-child(1) > div:nth-child(1) > a > div > div._9AhH0"
-usersname = "body > div._2dDPU.vCf6V > div.zZYga > div > article > header > div.o-MQd.z8cbW > div.PQo_0.RqtMr > div.e1e1d > h2 > a"
-follow_button = 'body > div._2dDPU.vCf6V > div.zZYga > div > article > header > div.o-MQd.z8cbW > div.PQo_0.RqtMr > div.bY2yH > button'
-like_button = 'body > div._2dDPU.vCf6V > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n > button > svg'
-comment_icon = 'body > div._2dDPU.vCf6V > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span._15y0l > button > span'
-comment_area = 'body > div._2dDPU.vCf6V > div.zZYga > div > article > div.eo2As > section.sH9wk._JgwE > div > form > textarea'
-comment_area2 = '/html/body/div[4]/div[2]/div/article/div[2]/section[3]/div/form/textarea'
-
-next_button = 'body > div._2dDPU.vCf6V > div.EfHg9 > div > div > a.HBoOv.coreSpriteRightPaginationArrow'
 
 
-fitness = r'C:\Users\Nastracha\Instagram\instagram_main\Hashtags\fitness_hash_list'

@@ -26,3 +26,4 @@ next_button = config["IG_elements"]["next_button"]
 
 # hash_tags
 fitness = config["Hash_tags"]["fitness"]
+# instagram_main/Hashtags/fitness_hash_list
