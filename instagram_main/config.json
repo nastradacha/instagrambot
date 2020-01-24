@@ -1,0 +1,23 @@
+{
+    "configs": {
+        "Chrome_driver": "C:\\Users\\Nastracha\\OneDrive\\Desktop\\Selenium browser drivers\\chromedriver_win32\\chromedriver.exe"
+    },
+    "URL": {
+        "instagram": "https://www.instagram.com/accounts/login/?source=auth_switcher",
+        "my_profile": "https://www.instagram.com/raikage_fitness/"
+    },
+    "Elements": {
+        "my_followers_selector": "a[href='/raikage_fitness/followers/']",
+        "my_following_selector": "a[href='/raikage_fitness/following/']"
+    },
+    "IG_elements": {
+        "login_popup_not_now_element": "body > div.RnEpo.Yx5HN > div > div > div.mt3GC > button.aOOlW.HoLwm",
+        "thumbnail": "#react-root > section > main > article > div.EZdmt > div > div > div:nth-child(1) > div:nth-child(1) > a > div > div._9AhH0",
+        "usersname": "body > div._2dDPU.vCf6V > div.zZYga > div > article > header > div.o-MQd.z8cbW > div.PQo_0.RqtMr > div.e1e1d > h2 > a",
+        "follow_button": "body > div._2dDPU.vCf6V > div.zZYga > div > article > header > div.o-MQd.z8cbW > div.PQo_0.RqtMr > div.bY2yH > button",
+        "like_button": "body > div._2dDPU.vCf6V > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n > button > svg",
+        "comment_icon": "body > div._2dDPU.vCf6V > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span._15y0l > button > span",
+        "next_button": "body > div._2dDPU.vCf6V > div.EfHg9 > div > div > a.HBoOv.coreSpriteRightPaginationArrow"
+    },
+    "Hash_tags": {"fitness": "instagram_main/Hashtags/fitness_hash_list"}
+}
