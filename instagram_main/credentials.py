@@ -31,8 +31,10 @@ def get_cred_from_lasspass(app_name):
         vault = Vault.open_remote(
             username, password, multifactor_password, client_id=DEVICE_ID
         )
-    list_from_vault = [(i.username.decode("UTF-8"),i.password.decode("UTF-8")) for i in vault.accounts if i.name.decode("UTF-8") == f"{app_name}"]
+    list_from_vault = [
+        (i.username.decode("UTF-8"), i.password.decode("UTF-8"))
+        for i in vault.accounts
+        if i.name.decode("UTF-8") == f"{app_name}"
+    ]
     list_from_vault = list_from_vault[0]
     return list_from_vault
-
-

@@ -58,9 +58,10 @@ def check_if_element_by_css(webdriver, selector):
         return False
     return True
 
-
-
-
+#
+# current_date_time = pd.Timestamp.now()
+# print(current_date_time)
+# strftime("%Y%m%d-%H%M%S")
 
 
 

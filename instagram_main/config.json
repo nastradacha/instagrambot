@@ -4,11 +4,11 @@
     },
     "URL": {
         "instagram": "https://www.instagram.com/accounts/login/?source=auth_switcher",
-        "my_profile": "https://www.instagram.com/raikage_fitness/"
+        "my_profile": "https://www.instagram.com"
     },
     "Elements": {
-        "my_followers_selector": "a[href='/raikage_fitness/followers/']",
-        "my_following_selector": "a[href='/raikage_fitness/following/']"
+        "my_followers_selector": "a[href='/",
+        "my_following_selector": "a[href='/"
     },
     "IG_elements": {
         "login_popup_not_now_element": "body > div.RnEpo.Yx5HN > div > div > div.mt3GC > button.aOOlW.HoLwm",
