@@ -67,8 +67,8 @@ def check_if_element_by_css(webdriver, selector):
     return True
 
 
-def read_sql_file():
-    file = open('../instagram_main/Sql_scripts/get_followed_users.sql')
+def read_sql_file(sql_file):
+    file = open(sql_file)
     sql_file = file.read().replace('\n', ' ')
     file.close()
     return sql_file

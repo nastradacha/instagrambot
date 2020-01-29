@@ -1,0 +1,1 @@
+select exists (select true from public."IG_iamfollowing"  where followed_username='textToReplace')

@@ -8,6 +8,7 @@ config = config_json(config_file_path)
 # URL
 instagram_login_page = config["URL"]["instagram"]
 my_profile_page = config["URL"]["my_profile"]
+tag_url = config["URL"]["url_tags"]
 
 # Chrome browser driver
 chrome_driver = config["configs"]["Chrome_driver"]
@@ -27,3 +28,12 @@ next_button = config["IG_elements"]["next_button"]
 # hash_tags
 fitness = config["Hash_tags"]["fitness"]
 # instagram_main/Hashtags/fitness_hash_list
+
+
+# SQL Scripts
+get_followed_users = config["Sql_scripts"]["get_followed_users"]
+if_following = config["Sql_scripts"]["if_following"]
+
+
+# comment list
+comments_list = ["nice!", "sweet!", ":-)", "Cool", "👍🏿"]
