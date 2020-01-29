@@ -3,12 +3,17 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from instagram_main.credentials import get_cred_from_lasspass
-from time import sleep, strftime
+from time import sleep
 from random import randint
 import pandas as pd
 from io import StringIO
 from instagram_main.config import *
-from instagram_main.modules import check_if_element_by_css, read_hash_tag, add_comment
+from instagram_main.modules import (
+    check_if_element_by_css,
+    read_hash_tag,
+    add_comment,
+    read_sql_file,
+)
 from instagram_main.DB_connection.db_modules import (
     get_records,
     connect_db,
@@ -19,7 +24,7 @@ from instagram_main.DB_connection.db_modules import (
 connection = connect_db("")
 
 # login info
-username, password = get_cred_from_lasspass("Instagram2")
+username, password = get_cred_from_lasspass("Instagram")
 
 
 # selenium page controller or webdriver
@@ -72,31 +77,18 @@ def login_to_instagram(username, password):
 login_to_instagram(username, password)
 
 
-def like_comment_follow_user(username):
-    # "gymrat", "fitness","atl", "cardio", "travel"
+def like_comment_follow_user():
     hash_tag_list = read_hash_tag(fitness)
     comments_list = ["nice!", "sweet!", ":-)", "Cool", "👍🏿"]
     # prev_user_list = []
-
-    followed_from_db = get_records(
-        connection,
-        f"""SELECT igp.ig_id ,followed_username FROM public."IG_iamfollowing" as igi
-INNER join  "IG_profile_details" as igp
-on igp.ig_id = igi.ig_id
-where igp.account_user = '{username}'""",
-    )
-    # new_id =
-    # print(followed_from_db['ig_id'])
+    sql = read_sql_file()
+    query_with_param = sql.replace("textToReplace", username)
+    followed_from_db = get_records(connection, query_with_param)
     ig_id = [i for i in followed_from_db["ig_id"]]
     ig_id = ig_id[0]
-    prev_user_list = [users for users in followed_from_db["followed_username"]]
-    print("this is prev ur list", prev_user_list)
-
-    # prev_user_list = pd.read_csv(
-    #     "20200117-020548_users_followed_list.csv", delimiter=","
-    # ).iloc[:,0:]
-    # prev_user_list = list(prev_user_list)
-    # print(prev_user_list)
+    prev_user_list = [
+        users for users in followed_from_db["followed_username"]
+    ]  # list of followed from DB
 
     new_followed = []
     tag = -1
@@ -114,7 +106,7 @@ where igp.account_user = '{username}'""",
         first_thumbnail.click()
         sleep(randint(1, 2))
         try:
-            for x in range(0, 2):
+            for x in range(0, 4):
                 instagram_user = browser.find_element_by_css_selector(users_name).text
 
                 if (
@@ -142,9 +134,9 @@ where igp.account_user = '{username}'""",
 
                         # adds comment from the comment list
                         # adds random comments
-                        add_comment(comments_list, wait)
-                        comments += 1
-                        print("comment added for user: ", instagram_user)
+                        # add_comment(comments_list, wait, instagram_user)
+                        # comments += 1
+
 
                     # next picture
                     next_pic = browser.find_element_by_css_selector(next_button)
@@ -172,6 +164,7 @@ where igp.account_user = '{username}'""",
     cur.close()
 
 
+
 browser.get(my_profile_page + f"/{username}")
 followers = browser.find_element_by_css_selector(
     my_followers + f"{username}/followers/']"
@@ -186,5 +179,6 @@ print(int(following_count.replace(" following", "")))
 # int(following_count.replace(' following', '')) and nt(following_count.replace(' following', ''))
 
 
-like_comment_follow_user(username)
+like_comment_follow_user()
 browser.quit()
+disconnect_db(connection)

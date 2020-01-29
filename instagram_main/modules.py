@@ -24,21 +24,29 @@ def config_json(file_path):
     return c_config
 
 
-def add_comment(comment_here, wait):
+def add_comment(comment_here, wait, instagram_user):
     """
     :param comment_here: Variable name of a list containing comments eg: comment = ['nice','awesome','cool']
     :param wait: This is a browser explicit wait function, wait function is added to a variable in the instagram_bot.py
+    :param instagram_user: instagram_user  that is being followed or liked
     :return: this adds a comment to the comment section of the user
     """
     while 1 == 1:
+        determine_to_comment = randint(1, 5)
         try:
-            comment_section = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'textarea.Ypffh')))
-            comment_section.send_keys(comment_here[randint(0, len(comment_here))])
-            sleep(1)
-            # hit Enter to send comment
-            comment_section.send_keys(Keys.ENTER)
-            sleep(randint(2, 4))
-            break
+
+            print(determine_to_comment)
+            if determine_to_comment >= 3:
+                comment_section = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'textarea.Ypffh')))
+                comment_section.send_keys(comment_here[randint(0, len(comment_here))])
+                sleep(1)
+                # hit Enter to send comment
+                comment_section.send_keys(Keys.ENTER)
+                print("comment added for user: ", instagram_user)
+                sleep(randint(2, 4))
+                break
+            else:
+                break
         except Exception:
             sleep(randint(5, 8))
 
@@ -58,11 +66,13 @@ def check_if_element_by_css(webdriver, selector):
         return False
     return True
 
+
+def read_sql_file():
+    file = open('../instagram_main/Sql_scripts/get_followed_users.sql')
+    sql_file = file.read().replace('\n', ' ')
+    file.close()
+    return sql_file
 #
 # current_date_time = pd.Timestamp.now()
 # print(current_date_time)
 # strftime("%Y%m%d-%H%M%S")
-
-
-
-
