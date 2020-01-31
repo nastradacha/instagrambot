@@ -23,6 +23,7 @@ thumbnail = config["IG_elements"]["thumbnail"]
 users_name = config["IG_elements"]["usersname"]
 follow_button = config["IG_elements"]["follow_button"]
 like_button = config["IG_elements"]["like_button"]
+unlike_button = config["IG_elements"]["Unlike_button"]
 next_button = config["IG_elements"]["next_button"]
 
 # hash_tags
@@ -37,3 +38,4 @@ if_following = config["Sql_scripts"]["if_following"]
 
 # comment list
 comments_list = ["nice!", "sweet!", ":-)", "Cool", "👍🏿"]
+

@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.support.color import Color
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -20,12 +21,14 @@ from instagram_main.DB_connection.db_modules import (
     connect_db,
     disconnect_db,
 )
+from tqdm import tqdm
+
 
 # current_date_time = "nothing"
 connection = connect_db("")
 
 # login info
-username, password = get_cred_from_lasspass("Instagram")
+username, password = get_cred_from_lasspass("Instagram2")
 
 
 # selenium page controller or webdriver
@@ -44,21 +47,18 @@ browser = browser()
 
 
 # explicit wait call
-wait = WebDriverWait(browser, 100)
+wait = WebDriverWait(browser, 4)
 
 
 # navigate to instagram.com
 def navigate_to_url(url):
     browser.get(url)
-    browser.implicitly_wait(3)
-
-
-navigate_to_url(instagram_login_page)
+    browser.implicitly_wait(4)
 
 
 # login to instagram.com
 def login_to_instagram(username, password):
-
+    navigate_to_url(instagram_login_page)
     username_field = browser.find_element_by_name("username")
     password_field = browser.find_element_by_name("password")
     button_login = browser.find_element_by_xpath(
@@ -87,35 +87,54 @@ def search_user_by_hash(hash_by_category):
     hash_tag_list = read_hash_tag(hash_by_category)
     tag = choice(hash_tag_list)
     navigate_to_url(tag_url + tag)
-    first_thumbnail = browser.find_element_by_css_selector(thumbnail)
+    first_thumbnail = wait.until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, thumbnail))
+    )
     first_thumbnail.click()
 
 
-def follow_user():
-    followed = 0
-    new_followed = []
-    instagram_user = browser.find_element_by_css_selector(users_name).text
-    sql = read_sql_file(if_following)
-    query_with_param = sql.replace("textToReplace", instagram_user)
-    already_following = get_records(connection, query_with_param)
-    if (
-        already_following.bool() is False
-        and browser.find_element_by_css_selector(follow_button).text == "Follow"
-    ):
-        print("works")
+def follow_user(new_followed):
+    try:
+        followed = 0
+        instagram_user = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, users_name))
+        ).text
+        is_follow_sql = read_sql_file(if_following)
+        query_with_param = is_follow_sql.replace("textToReplace", instagram_user)
+        already_following_df = get_records(connection, query_with_param)
+        if (
+            already_following_df.bool() is False
+            and browser.find_element_by_css_selector(follow_button).text == "Follow"
+        ):
 
-        if browser.find_element_by_css_selector(follow_button).text == "Follow":
-            browser.find_element_by_css_selector(follow_button).click()
-            # add followed to new_followed_list
-            new_followed.append(instagram_user)
-            followed += 1
+            if browser.find_element_by_css_selector(follow_button).text == "Follow":
+                browser.find_element_by_css_selector(follow_button).click()
+                # add followed to new_followed_list
+                new_followed.append(instagram_user)
+                followed += 1
+    except Exception:
+        followed = None
+    return followed
 
 
 def like_pic():
     likes = 0
-    button_like = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, like_button)))
-    button_like.click()
-    likes += 1
+    try:
+        if wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, like_button))
+        ).is_displayed():
+            wait.until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, like_button))
+            ).click()
+            likes += 1
+    except Exception as es:
+        wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, unlike_button))
+        ).is_displayed()
+        print("picture already liked")
+    except:
+        print("like button not found")
+    return likes
 
 
 def send_comment(comment_here):
@@ -144,10 +163,60 @@ def send_comment(comment_here):
             sleep(randint(5, 8))
 
 
-search_user_by_hash(fitness)
-follow_user()
-like_pic()
-send_comment(comments_list)
+# next picture
+def click_next_pic():
+    next_pic = browser.find_element_by_css_selector(next_button)
+    next_pic.click()
+    sleep(randint(2, 4))
+
+
+# new code starts here --------------------------------------------------------------------------
+# login_to_instagram(username, password)
+# search_user_by_hash(fitness)
+# follow_user()
+# # like_pic()
+# send_comment(comments_list)
+# click_next_pic()
+
+
+def follow_by_hash_tag(amount):
+    new_followed = []
+    pbar = tqdm(total=amount - len(new_followed), desc="total follows", leave=True)
+    account_uid_sql = read_sql_file(get_followed_users)
+    query_with_param = account_uid_sql.replace("textToReplace", username)
+    account_uid_df = get_records(connection, query_with_param)
+    account_uid_df = account_uid_df.at[0, "ig_id"]
+    while len(new_followed) <= amount:
+        search_user_by_hash(fitness)
+        for i in range(10):
+            follow_user(new_followed)
+            click_next_pic()
+    updated_user_df = pd.DataFrame(new_followed, index=None, columns=["Followed_users"])
+    current_date_time = pd.Timestamp.now()
+    updated_user_df.insert(1, "date", current_date_time, True)
+    updated_user_df.insert(0, "userID", account_uid_df, False)
+    print(updated_user_df)
+    table_name = 'public."IG_iamfollowing"'
+    output = StringIO()
+    updated_user_df.to_csv(output, sep="\t", header=False, index=False)
+    output.seek(0)
+    cur = connection.cursor()
+    cur.copy_from(
+        output, table_name, columns=("ig_id", "followed_username", "date_followed")
+    )
+    connection.commit()
+    cur.close()
+
+
+def like_by_hash_tag(amount):
+    new_liked = 0
+    pbar = tqdm(total=amount, desc="total liked", leave=True)
+    while new_liked <= amount:
+        search_user_by_hash(fitness)
+        for i in range(10):
+            new_liked += like_pic()
+            click_next_pic()
+    return new_liked
 
 
 def like_comment_follow_user():
@@ -178,7 +247,7 @@ def like_comment_follow_user():
         first_thumbnail.click()
         sleep(randint(1, 2))
         try:
-            for x in range(0, 4):
+            for x in range(0, 3):
                 instagram_user = browser.find_element_by_css_selector(users_name).text
 
                 if (
@@ -235,20 +304,8 @@ def like_comment_follow_user():
     cur.close()
 
 
-browser.get(my_profile_page + f"/{username}")
-followers = browser.find_element_by_css_selector(
-    my_followers + f"{username}/followers/']"
-)
-following = browser.find_element_by_css_selector(
-    my_following + f"{username}/following/']"
-)
-followers_count = followers.text
-following_count = following.text
-print(followers_count)
-print(int(following_count.replace(" following", "")))
-# int(following_count.replace(' following', '')) and nt(following_count.replace(' following', ''))
-
-
-like_comment_follow_user()
+follow_by_hash_tag(10)
+like_by_hash_tag(5)
+# like_comment_follow_user()
 browser.quit()
-disconnect_db(connection)
+# disconnect_db(connection)

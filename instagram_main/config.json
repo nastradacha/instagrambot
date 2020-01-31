@@ -16,7 +16,8 @@
         "thumbnail": "#react-root > section > main > article > div.EZdmt > div > div > div:nth-child(1) > div:nth-child(1) > a > div > div._9AhH0",
         "usersname": "body > div._2dDPU.vCf6V > div.zZYga > div > article > header > div.o-MQd.z8cbW > div.PQo_0.RqtMr > div.e1e1d > h2 > a",
         "follow_button": "body > div._2dDPU.vCf6V > div.zZYga > div > article > header > div.o-MQd.z8cbW > div.PQo_0.RqtMr > div.bY2yH > button",
-        "like_button": "body > div._2dDPU.vCf6V > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n > button > svg",
+          "like_button": "article > div.eo2As > section.ltpMr.Slqrh > span.fr66n > button > svg[aria-label='Like']",
+        "Unlike_button": "article > div.eo2As > section.ltpMr.Slqrh > span.fr66n > button > svg[aria-label='Unlike']",
         "comment_icon": "body > div._2dDPU.vCf6V > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span._15y0l > button > span",
         "next_button": "body > div._2dDPU.vCf6V > div.EfHg9 > div > div > a.HBoOv.coreSpriteRightPaginationArrow"
     },
