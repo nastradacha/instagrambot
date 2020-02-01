@@ -28,7 +28,7 @@ from tqdm import tqdm
 connection = connect_db("")
 
 # login info
-username, password = get_cred_from_lasspass("Instagram2")
+username, password = get_cred_from_lasspass("Instagram")
 
 
 # selenium page controller or webdriver
@@ -87,13 +87,14 @@ def search_user_by_hash(hash_by_category):
     hash_tag_list = read_hash_tag(hash_by_category)
     tag = choice(hash_tag_list)
     navigate_to_url(tag_url + tag)
+    browser.implicitly_wait(5)
     first_thumbnail = wait.until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, thumbnail))
     )
     first_thumbnail.click()
 
 
-def follow_user(new_followed):
+def follow_user(follow_list):
     try:
         followed = 0
         instagram_user = wait.until(
@@ -110,7 +111,7 @@ def follow_user(new_followed):
             if browser.find_element_by_css_selector(follow_button).text == "Follow":
                 browser.find_element_by_css_selector(follow_button).click()
                 # add followed to new_followed_list
-                new_followed.append(instagram_user)
+                follow_list.append(instagram_user)
                 followed += 1
     except Exception:
         followed = None
@@ -170,6 +171,14 @@ def click_next_pic():
     sleep(randint(2, 4))
 
 
+def get_following_count():
+    following = browser.find_element_by_css_selector(
+        my_following + f"{username}/following/']"
+    )
+    following_count = int(following.text.replace(" following", ""))
+    return following_count
+
+
 # new code starts here --------------------------------------------------------------------------
 # login_to_instagram(username, password)
 # search_user_by_hash(fitness)
@@ -180,29 +189,56 @@ def click_next_pic():
 
 
 def follow_by_hash_tag(amount):
+    navigate_to_url(my_profile_page + f"/{username}")
+    following_count = get_following_count()
     new_followed = []
-    pbar = tqdm(total=amount - len(new_followed), desc="total follows", leave=True)
     account_uid_sql = read_sql_file(get_followed_users)
     query_with_param = account_uid_sql.replace("textToReplace", username)
     account_uid_df = get_records(connection, query_with_param)
     account_uid_df = account_uid_df.at[0, "ig_id"]
-    while len(new_followed) <= amount:
+    while len(new_followed) < amount - 1:
         search_user_by_hash(fitness)
-        for i in range(10):
+        for i in range(6):
             follow_user(new_followed)
             click_next_pic()
+    navigate_to_url(my_profile_page + f"/{username}")
+    new_following_count = get_following_count()
     updated_user_df = pd.DataFrame(new_followed, index=None, columns=["Followed_users"])
     current_date_time = pd.Timestamp.now()
     updated_user_df.insert(1, "date", current_date_time, True)
     updated_user_df.insert(0, "userID", account_uid_df, False)
+    following_details = {
+        "current_F": new_following_count,
+        "previous_F": following_count,
+        "today_date": current_date_time,
+        "userID": account_uid_df,
+    }
+    following_details_df = pd.DataFrame(following_details, index=[0])
+    print(following_details_df)
     print(updated_user_df)
-    table_name = 'public."IG_iamfollowing"'
+    follow_details_table_name = 'public."follow_details"'
+    iamfollowing_table_name = 'public."IG_iamfollowing"'
+    output_fd = StringIO()
     output = StringIO()
+    following_details_df.to_csv(output_fd, sep="\t", header=False, index=False)
     updated_user_df.to_csv(output, sep="\t", header=False, index=False)
+    output_fd.seek(0)
     output.seek(0)
     cur = connection.cursor()
     cur.copy_from(
-        output, table_name, columns=("ig_id", "followed_username", "date_followed")
+        output_fd,
+        follow_details_table_name,
+        columns=(
+            "current_following_count",
+            "previous_following_count",
+            "date_last_updated",
+            "ig_id",
+        ),
+    )
+    cur.copy_from(
+        output,
+        iamfollowing_table_name,
+        columns=("ig_id", "followed_username", "date_followed"),
     )
     connection.commit()
     cur.close()
@@ -210,10 +246,10 @@ def follow_by_hash_tag(amount):
 
 def like_by_hash_tag(amount):
     new_liked = 0
-    pbar = tqdm(total=amount, desc="total liked", leave=True)
+    pbar = tqdm(total=new_liked, desc="total liked", leave=True)
     while new_liked <= amount:
         search_user_by_hash(fitness)
-        for i in range(10):
+        for i in range(20):
             new_liked += like_pic()
             click_next_pic()
     return new_liked
@@ -304,8 +340,53 @@ def like_comment_follow_user():
     cur.close()
 
 
-follow_by_hash_tag(10)
-like_by_hash_tag(5)
+# follow_by_hash_tag(2)
+# like_by_hash_tag(5)
 # like_comment_follow_user()
-browser.quit()
+# browser.quit()
 # disconnect_db(connection)
+
+
+# browser.get(my_profile_page + f"/{username}")
+# followers = browser.find_element_by_css_selector(
+#     my_followers + f"{username}/followers/']"
+# )
+
+def unfollow_IG_user():
+    unfollowed_list = []
+    account_uid_sql = read_sql_file(get_followed_users)
+    query_with_param = account_uid_sql.replace("textToReplace", username)
+    account_uid_df = get_records(connection, query_with_param)
+    account_uid_df = account_uid_df["followed_username"]
+    print(account_uid_df)
+    # acc = account_uid_df.at[0, "followed_username"]
+    for user_id in account_uid_df:
+        navigate_to_url(my_profile_page + f"/{user_id}")
+        browser.implicitly_wait(2)
+        follow_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.vBF20 button')))
+        if follow_button.text == 'Following':
+            follow_button.click()
+            unfollowed_list.append(user_id)
+            unfollowing_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.piCib button.-Cab_')))
+            unfollowing_button.click()
+        else:
+            print(user_id, 'already unfollowed')
+    unfollowed_list_t = tuple(unfollowed_list)
+    print(unfollowed_list_t)
+    cur = connection.cursor()
+    cur.execute(f'update public."IG_iamfollowing" set unfollowed_username = True where followed_username in  {unfollowed_list_t}')
+    connection.commit()
+    cur.close()
+
+# unfollowing_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.piCib button.-Cab_')))
+# unfollowing_button.click()
+unfollow_IG_user()
+sleep(5)
+exit()
+# followers_count = followers.text
+# following_count = following.text
+# print(int(followers_count.replace("followers", "")))
+# print(int(following_count.replace(" following", "")))
+# int(following_count.replace(' following', '')) and nt(following_count.replace(' following', ''))
+
+
