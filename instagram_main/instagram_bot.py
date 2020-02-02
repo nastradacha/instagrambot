@@ -28,7 +28,7 @@ from tqdm import tqdm
 connection = connect_db("")
 
 # login info
-username, password = get_cred_from_lasspass("Instagram")
+username, password = get_cred_from_lasspass("Instagram2")
 
 
 # selenium page controller or webdriver
@@ -340,6 +340,50 @@ def like_comment_follow_user():
     cur.close()
 
 
+def un_follow_ig_user():
+    unfollowed_list = []
+    account_uid_sql = read_sql_file(get_followed_users)
+    query_with_param = account_uid_sql.replace("textToReplace", username)
+    account_uid_df = get_records(connection, query_with_param)
+    account_followed_df = account_uid_df["followed_username"]
+    print(account_followed_df)
+    # acc = account_uid_df.at[0, "followed_username"]
+    account_userid_df = account_uid_df.at[0, "ig_id"]
+    for user_id in account_followed_df:
+        navigate_to_url(my_profile_page + f"/{user_id}")
+        browser.implicitly_wait(5)
+        follow_buttonc = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "button"))
+        )
+        if follow_buttonc.text == "Following":
+            follow_buttonc.click()
+            unfollowed_list.append(user_id)
+            unfollowing_button = wait.until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, ".piCib button.-Cab_"))
+            )
+            unfollowing_button.click()
+        else:
+            print(user_id, "already unfollowed")
+    # unfollowed_list_t = tuple(unfollowed_list)
+    # print(unfollowed_list_t)
+    # unfollowed_list_df = pd.DataFrame(unfollowed_list)
+    # io_list = StringIO()
+    string_list = ",".join(unfollowed_list)
+    # unfollowed_list_df.to_csv(io_list, sep=",", header=False, index=False)
+    cur = connection.cursor()
+    account_uid_sql = read_sql_file(update_unfollowed)
+    account_uid_sql = account_uid_sql.replace("textToReplace", str(account_userid_df))
+    sql_query = account_uid_sql + (
+        " ('" + "','".join((str(n) for n in unfollowed_list)) + "')"
+    )
+    # query_with_param = account_uid_sql.replace("textToReplace", string_list)
+    print(sql_query)
+    cur.execute(sql_query)
+    connection.commit()
+    cur.close()
+
+
+# un_follow_ig_user()
 # follow_by_hash_tag(2)
 # like_by_hash_tag(5)
 # like_comment_follow_user()
@@ -352,41 +396,8 @@ def like_comment_follow_user():
 #     my_followers + f"{username}/followers/']"
 # )
 
-def unfollow_IG_user():
-    unfollowed_list = []
-    account_uid_sql = read_sql_file(get_followed_users)
-    query_with_param = account_uid_sql.replace("textToReplace", username)
-    account_uid_df = get_records(connection, query_with_param)
-    account_uid_df = account_uid_df["followed_username"]
-    print(account_uid_df)
-    # acc = account_uid_df.at[0, "followed_username"]
-    for user_id in account_uid_df:
-        navigate_to_url(my_profile_page + f"/{user_id}")
-        browser.implicitly_wait(2)
-        follow_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.vBF20 button')))
-        if follow_button.text == 'Following':
-            follow_button.click()
-            unfollowed_list.append(user_id)
-            unfollowing_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.piCib button.-Cab_')))
-            unfollowing_button.click()
-        else:
-            print(user_id, 'already unfollowed')
-    unfollowed_list_t = tuple(unfollowed_list)
-    print(unfollowed_list_t)
-    cur = connection.cursor()
-    cur.execute(f'update public."IG_iamfollowing" set unfollowed_username = True where followed_username in  {unfollowed_list_t}')
-    connection.commit()
-    cur.close()
-
-# unfollowing_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.piCib button.-Cab_')))
-# unfollowing_button.click()
-unfollow_IG_user()
-sleep(5)
-exit()
 # followers_count = followers.text
 # following_count = following.text
 # print(int(followers_count.replace("followers", "")))
 # print(int(following_count.replace(" following", "")))
 # int(following_count.replace(' following', '')) and nt(following_count.replace(' following', ''))
-
-

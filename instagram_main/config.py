@@ -1,4 +1,6 @@
 from instagram_main.modules import config_json
+from io import StringIO
+import pandas as pd
 
 
 config_file_path = r"C:\Users\Nastracha\Instagram\instagram_main\config.json"
@@ -28,14 +30,27 @@ next_button = config["IG_elements"]["next_button"]
 
 # hash_tags
 fitness = config["Hash_tags"]["fitness"]
-# instagram_main/Hashtags/fitness_hash_list
+# instagram_main/Hashtags/fitness_hash_list.txt
 
 
 # SQL Scripts
 get_followed_users = config["Sql_scripts"]["get_followed_users"]
 if_following = config["Sql_scripts"]["if_following"]
+update_unfollowed = config["Sql_scripts"]["update_unfollowed"]
+
 
 
 # comment list
 comments_list = ["nice!", "sweet!", ":-)", "Cool", "👍🏿"]
 
+
+
+# list_a = ['mike', 'james', 'tommas']
+# list_df = pd.DataFrame(list_a)
+# list_t = tuple(list_a)
+# # print(list_df)
+# io_list = StringIO()
+# list_df.to_csv(io_list, sep=",", header=False, index=False)
+# io_list.seek(0)
+# print('abs is a monster', io_list.getvalue())
+# print(io_list.getvalue())

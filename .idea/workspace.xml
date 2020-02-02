@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c39ca85a-5deb-4033-86db-78bf17eb7eb1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instagram_main/Hashtags/fitness_hash_list" beforeDir="false" afterPath="$PROJECT_DIR$/instagram_main/Hashtags/fitness_hash_list.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/instagram_main/Sql_scripts/get_followed_users.sql" beforeDir="false" afterPath="$PROJECT_DIR$/instagram_main/Sql_scripts/get_followed_users.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instagram_main/Sql_scripts/if_following.sql" beforeDir="false" afterPath="$PROJECT_DIR$/instagram_main/Sql_scripts/if_following.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instagram_main/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/instagram_main/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instagram_main/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/instagram_main/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/instagram_main/instagram_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/instagram_main/instagram_bot.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,16 +36,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/instagram_main/instagram_bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="101">
-              <caret line="364" column="33" selection-start-line="364" selection-start-column="33" selection-end-line="364" selection-end-column="33" />
+            <state relative-caret-position="74">
+              <caret line="366" column="36" lean-forward="true" selection-start-line="366" selection-start-column="36" selection-end-line="366" selection-end-column="36" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
                 <element signature="e#1106#1333#0" />
                 <element signature="e#1514#1561#0" />
                 <element signature="e#1637#2329#0" />
+                <element signature="e#2255#2660#0" />
+                <element signature="e#2698#3572#0" />
                 <element signature="e#3595#4130#0" />
                 <element signature="e#4169#5032#0" />
                 <element signature="e#5076#5182#0" />
+                <element signature="e#5244#5456#0" />
+                <element signature="e#5747#7766#0" />
                 <element signature="e#6649#6906#0" />
                 <element signature="e#6166#9402#0" />
               </folding>
@@ -49,10 +58,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/instagram_main/Sql_scripts/update_unfollowed.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="117" selection-start-column="117" selection-end-column="117" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/instagram_main/Sql_scripts/if_following.sql">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="28" lean-forward="true" selection-start-column="28" selection-end-column="28" />
+              <caret column="83" lean-forward="true" selection-start-column="83" selection-end-column="83" />
             </state>
           </provider>
         </entry>
@@ -75,8 +93,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/instagram_main/Sql_scripts/get_followed_users.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="65" selection-start-column="65" selection-end-column="65" />
+            <state relative-caret-position="144">
+              <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -84,8 +102,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/instagram_main/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="41" selection-start-line="41" selection-end-line="41" />
+            <state relative-caret-position="176">
+              <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="56" />
+              <folding>
+                <element signature="e#0#46#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -93,7 +114,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/instagram_main/DB_connection/db_modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
+            <state relative-caret-position="309">
               <caret line="29" selection-start-line="29" selection-end-line="29" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -103,25 +124,16 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../.virtualenvs/Instagram-uOsNOz9f/Lib/site-packages/pandas/io/sql.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="331" selection-start-line="331" selection-end-line="331" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/instagram_main/config.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="15" column="145" selection-start-line="15" selection-start-column="140" selection-end-line="15" selection-end-column="145" />
+            <state relative-caret-position="417">
+              <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/instagram_main/Hashtags/fitness_hash_list">
+        <entry file="file://$PROJECT_DIR$/instagram_main/Hashtags/fitness_hash_list.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="144">
               <caret line="6" column="120" selection-start-line="6" selection-start-column="120" selection-end-line="6" selection-end-column="120" />
@@ -140,7 +152,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>webdriver</find>
       <find>instagram</find>
       <find>url</find>
       <find>print</find>
@@ -166,10 +177,11 @@
       <find>click</find>
       <find>div.e1e1d</find>
       <find>wait</find>
-      <find>get_cred_from_lasspass</find>
-      <find>9AhH0</find>
       <find>get_followed_use</find>
       <find>text</find>
+      <find>9AhH0</find>
+      <find>get_cred_from_lasspass</find>
+      <find>_5f5mN</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -187,21 +199,23 @@
         <option value="$PROJECT_DIR$/instagram_main/DB_connection/db_modules.py" />
         <option value="$PROJECT_DIR$/instagram_main/credentials.py" />
         <option value="$PROJECT_DIR$/instagram_main/Sql_scripts/get_followed_users" />
-        <option value="$PROJECT_DIR$/instagram_main/Sql_scripts/if_following.sql" />
         <option value="$PROJECT_DIR$/instagram_main/modules.py" />
         <option value="$PROJECT_DIR$/instagram_main/Hashtags/fitness_hash_list" />
+        <option value="$PROJECT_DIR$/instagram_main/Sql_scripts/if_following.sql" />
+        <option value="$PROJECT_DIR$/instagram_main/Sql_scripts/update_unfollowed" />
         <option value="$PROJECT_DIR$/instagram_main/config.json" />
         <option value="$PROJECT_DIR$/instagram_main/config.py" />
         <option value="$PROJECT_DIR$/instagram_main/Sql_scripts/get_followed_users.sql" />
+        <option value="$PROJECT_DIR$/instagram_main/Sql_scripts/update_unfollowed.sql" />
         <option value="$PROJECT_DIR$/instagram_main/instagram_bot.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1807" />
-    <option name="y" value="21" />
-    <option name="width" value="1698" />
-    <option name="height" value="1010" />
+    <option name="x" value="-1962" />
+    <option name="y" value="37" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -221,6 +235,12 @@
               <item name="Instagram" type="b2602c69:ProjectViewProjectNode" />
               <item name="Instagram" type="462c0819:PsiDirectoryNode" />
               <item name="instagram_main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Instagram" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Instagram" type="462c0819:PsiDirectoryNode" />
+              <item name="instagram_main" type="462c0819:PsiDirectoryNode" />
+              <item name="Hashtags" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Instagram" type="b2602c69:ProjectViewProjectNode" />
@@ -402,7 +422,7 @@
       <workItem from="1579731236501" duration="5085000" />
       <workItem from="1579829516070" duration="17588000" />
       <workItem from="1579891273036" duration="11206000" />
-      <workItem from="1579988520722" duration="157479000" />
+      <workItem from="1579988520722" duration="176053000" />
     </task>
     <task id="LOCAL-00001" summary="made changes to hashtag path in config.json file&#10;added comments to config.py&#10;refactored get_cred_from_lasspass , instead of making two calls to get credentials, it now gets credentials in one call&#10;refactored the way username and password gets assigned to variables&#10;removed element object from modules.py they are now located in config.json">
       <created>1579908155743</created>
@@ -422,13 +442,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="358211000" />
+    <option name="totallyTimeSpent" value="376785000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1927" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8420039" weight="0.13404825" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8420039" visible="true" weight="0.13404825" />
       <window_info id="Structure" order="1" sideWeight="0.5009634" side_tool="true" weight="0.3297587" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" sideWeight="0.4990366" weight="0.25938338" />
@@ -436,11 +456,11 @@
       <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="2" weight="0.3589365" />
       <window_info anchor="bottom" id="Python Console" order="3" weight="0.32382312" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.28673324" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="4" visible="true" weight="0.28673324" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50067025" side_tool="true" weight="0.38472834" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.34236804" />
-      <window_info active="true" anchor="bottom" id="Run" order="8" sideWeight="0.49932975" visible="true" weight="0.4850214" />
+      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.49932975" weight="0.2253923" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.41512126" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -518,8 +538,8 @@
     <SUITE FILE_PATH="coverage/Instagram$data_analysis.coverage" NAME="data_analysis Coverage Results" MODIFIED="1579735068978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/instagram_main" />
     <SUITE FILE_PATH="coverage/Instagram$credentials.coverage" NAME="credentials Coverage Results" MODIFIED="1579906555623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/instagram_main" />
     <SUITE FILE_PATH="coverage/Instagram$db_modules.coverage" NAME="db_modules Coverage Results" MODIFIED="1580008242932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/instagram_main/DB_connection" />
-    <SUITE FILE_PATH="coverage/Instagram$config.coverage" NAME="config Coverage Results" MODIFIED="1580361063523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/instagram_main" />
-    <SUITE FILE_PATH="coverage/Instagram$instagram_bot.coverage" NAME="instagram_bot Coverage Results" MODIFIED="1580547873162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/instagram_main" />
+    <SUITE FILE_PATH="coverage/Instagram$config.coverage" NAME="config Coverage Results" MODIFIED="1580622537522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/instagram_main" />
+    <SUITE FILE_PATH="coverage/Instagram$instagram_bot.coverage" NAME="instagram_bot Coverage Results" MODIFIED="1580635814107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/instagram_main" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/instagram_main/URL_links.json" />
@@ -604,34 +624,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/instagram_main/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="41" selection-start-line="41" selection-end-line="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/instagram_main/Hashtags/fitness_hash_list">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="6" column="120" selection-start-line="6" selection-start-column="120" selection-end-line="6" selection-end-column="120" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/instagram_main/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="15" column="145" selection-start-line="15" selection-start-column="140" selection-end-line="15" selection-end-column="145" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/instagram_main/Sql_scripts/if_following.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="28" lean-forward="true" selection-start-column="28" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../.virtualenvs/Instagram-uOsNOz9f/Lib/site-packages/pandas/io/sql.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="103">
@@ -639,9 +631,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/instagram_main/Hashtags/fitness_hash_list.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" column="120" selection-start-line="6" selection-start-column="120" selection-end-line="6" selection-end-column="120" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/instagram_main/DB_connection/db_modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
+        <state relative-caret-position="309">
           <caret line="29" selection-start-line="29" selection-end-line="29" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
@@ -649,25 +648,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/instagram_main/Sql_scripts/get_followed_users.sql">
+    <entry file="file://$PROJECT_DIR$/instagram_main/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="56" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/instagram_main/Sql_scripts/if_following.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="65" selection-start-column="65" selection-end-column="65" />
+          <caret column="83" lean-forward="true" selection-start-column="83" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/instagram_main/Sql_scripts/get_followed_users.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/instagram_main/config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/instagram_main/Sql_scripts/update_unfollowed.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="117" selection-start-column="117" selection-end-column="117" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/instagram_main/instagram_bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="364" column="33" selection-start-line="364" selection-start-column="33" selection-end-line="364" selection-end-column="33" />
+        <state relative-caret-position="74">
+          <caret line="366" column="36" lean-forward="true" selection-start-line="366" selection-start-column="36" selection-end-line="366" selection-end-column="36" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
             <element signature="e#1106#1333#0" />
             <element signature="e#1514#1561#0" />
             <element signature="e#1637#2329#0" />
+            <element signature="e#2255#2660#0" />
+            <element signature="e#2698#3572#0" />
             <element signature="e#3595#4130#0" />
             <element signature="e#4169#5032#0" />
             <element signature="e#5076#5182#0" />
+            <element signature="e#5244#5456#0" />
+            <element signature="e#5747#7766#0" />
             <element signature="e#6649#6906#0" />
             <element signature="e#6166#9402#0" />
           </folding>
