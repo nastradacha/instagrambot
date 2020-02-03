@@ -2,7 +2,7 @@ from instagram_main.modules import config_json
 from io import StringIO
 import pandas as pd
 
-
+georgia_cities_path = r"C:\Users\Nastracha\Instagram\instagram_main\Locations\georgia_cities.json"
 config_file_path = r"C:\Users\Nastracha\Instagram\instagram_main\config.json"
 config = config_json(config_file_path)
 
@@ -42,6 +42,18 @@ update_unfollowed = config["Sql_scripts"]["update_unfollowed"]
 
 # comment list
 comments_list = ["nice!", "sweet!", ":-)", "Cool", "👍🏿"]
+
+# georgia cities
+atlanta_search = config["georgia"]["Atlanta"]
+norcross_search = config["georgia"]["norcross"]
+marietta_search = config["georgia"]["marietta"]
+buckhead_search = config["georgia"]["buckhead"]
+alpharetta_search = config["georgia"]["alpharetta"]
+tucker_search = config["georgia"]["tucker"]
+doraville_search = config["georgia"]["doraville"]
+mcdonough_search = config["georgia"]["mcdonough"]
+
+
 
 
 

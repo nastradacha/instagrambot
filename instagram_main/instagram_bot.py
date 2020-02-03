@@ -175,7 +175,8 @@ def get_following_count():
     following = browser.find_element_by_css_selector(
         my_following + f"{username}/following/']"
     )
-    following_count = int(following.text.replace(" following", ""))
+    following_count = (following.text.replace(" following", ""))
+    following_count = int(following_count.replace(",", ""))
     return following_count
 
 
@@ -384,10 +385,10 @@ def un_follow_ig_user():
 
 
 # un_follow_ig_user()
-# follow_by_hash_tag(2)
-# like_by_hash_tag(5)
-# like_comment_follow_user()
-# browser.quit()
+follow_by_hash_tag(10)
+like_by_hash_tag(5)
+## like_comment_follow_user()
+browser.quit()
 # disconnect_db(connection)
 
 
