@@ -1,10 +1,13 @@
 from instagram_main.modules import config_json
 from io import StringIO
 import pandas as pd
+from random import randint, choice
+
 
 georgia_cities_path = r"C:\Users\Nastracha\Instagram\instagram_main\Locations\georgia_cities.json"
 config_file_path = r"C:\Users\Nastracha\Instagram\instagram_main\config.json"
 config = config_json(config_file_path)
+georgia_cities = config_json(georgia_cities_path)
 
 
 # URL
@@ -44,15 +47,20 @@ update_unfollowed = config["Sql_scripts"]["update_unfollowed"]
 comments_list = ["nice!", "sweet!", ":-)", "Cool", "👍🏿"]
 
 # georgia cities
-atlanta_search = config["georgia"]["Atlanta"]
-norcross_search = config["georgia"]["norcross"]
-marietta_search = config["georgia"]["marietta"]
-buckhead_search = config["georgia"]["buckhead"]
-alpharetta_search = config["georgia"]["alpharetta"]
-tucker_search = config["georgia"]["tucker"]
-doraville_search = config["georgia"]["doraville"]
-mcdonough_search = config["georgia"]["mcdonough"]
 
+# atlanta_search = georgia_cities["georgia"]["Atlanta"]
+# norcross_search = georgia_cities["georgia"]["norcross"]
+# marietta_search = georgia_cities["georgia"]["marietta"]
+# buckhead_search = georgia_cities["georgia"]["buckhead"]
+# alpharetta_search = georgia_cities["georgia"]["alpharetta"]
+# tucker_search = georgia_cities["georgia"]["tucker"]
+# doraville_search = georgia_cities["georgia"]["doraville"]
+# mcdonough_search = georgia_cities["georgia"]["mcdonough"]
+
+
+# cities_list = [georgia_cities['georgia'][x] for x in georgia_cities['georgia']]
+# print(cities_list)
+# # print(georgia_cities["georgia"])
 
 
 

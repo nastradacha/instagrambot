@@ -28,7 +28,7 @@ from tqdm import tqdm
 connection = connect_db("")
 
 # login info
-username, password = get_cred_from_lasspass("Instagram2")
+username, password = get_cred_from_lasspass("Instagram")
 
 
 # selenium page controller or webdriver
@@ -37,6 +37,8 @@ def browser():
     chrome_driver_path = chrome_driver
     # initiate Chrome browser
     driver = webdriver.Chrome(executable_path=chrome_driver_path)
+    # driver.set_window_position(0, 0)
+    # driver.set_window_size(1920, 1080)
     driver.maximize_window()
     driver.implicitly_wait(2)
     return driver
@@ -47,7 +49,7 @@ browser = browser()
 
 
 # explicit wait call
-wait = WebDriverWait(browser, 4)
+wait = WebDriverWait(browser, 9)
 
 
 # navigate to instagram.com
@@ -92,6 +94,24 @@ def search_user_by_hash(hash_by_category):
         EC.element_to_be_clickable((By.CSS_SELECTOR, thumbnail))
     )
     first_thumbnail.click()
+
+
+def search_user_by_cities():
+    """
+    :param hash_by_category: pass a list of hash-tags or pass one one the following
+     categories to use item from config.json
+    :return:
+    """
+    # hash_tag_list = read_hash_tag(hash_by_category)
+    cities_list = [georgia_cities['georgia'][x] for x in georgia_cities['georgia']]
+    cities_url = choice(cities_list)
+    navigate_to_url(cities_url)
+    browser.implicitly_wait(5)
+    first_thumbnail = wait.until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, thumbnail))
+    )
+    first_thumbnail.click()
+
 
 
 def follow_user(follow_list):
@@ -168,7 +188,7 @@ def send_comment(comment_here):
 def click_next_pic():
     next_pic = browser.find_element_by_css_selector(next_button)
     next_pic.click()
-    sleep(randint(2, 4))
+    sleep(randint(1, 2))
 
 
 def get_following_count():
@@ -180,6 +200,15 @@ def get_following_count():
     return following_count
 
 
+def get_follower_count():
+    follower = browser.find_element_by_css_selector(
+        my_followers + f"{username}/followers/']"
+    )
+    followers_count = (follower.text.replace(" followers", ""))
+    followers_count = int(followers_count.replace(",", ""))
+    return followers_count
+
+
 # new code starts here --------------------------------------------------------------------------
 # login_to_instagram(username, password)
 # search_user_by_hash(fitness)
@@ -188,18 +217,18 @@ def get_following_count():
 # send_comment(comments_list)
 # click_next_pic()
 
-
-def follow_by_hash_tag(amount):
+def follow_by_location(amount):
     navigate_to_url(my_profile_page + f"/{username}")
     following_count = get_following_count()
+    followers_count = get_follower_count()
     new_followed = []
     account_uid_sql = read_sql_file(get_followed_users)
     query_with_param = account_uid_sql.replace("textToReplace", username)
     account_uid_df = get_records(connection, query_with_param)
     account_uid_df = account_uid_df.at[0, "ig_id"]
     while len(new_followed) < amount - 1:
-        search_user_by_hash(fitness)
-        for i in range(6):
+        search_user_by_cities()
+        for i in range(randint(5, 10)):
             follow_user(new_followed)
             click_next_pic()
     navigate_to_url(my_profile_page + f"/{username}")
@@ -213,6 +242,7 @@ def follow_by_hash_tag(amount):
         "previous_F": following_count,
         "today_date": current_date_time,
         "userID": account_uid_df,
+        "follower_N": followers_count
     }
     following_details_df = pd.DataFrame(following_details, index=[0])
     print(following_details_df)
@@ -234,6 +264,66 @@ def follow_by_hash_tag(amount):
             "previous_following_count",
             "date_last_updated",
             "ig_id",
+            "follower_count"
+        ),
+    )
+    cur.copy_from(
+        output,
+        iamfollowing_table_name,
+        columns=("ig_id", "followed_username", "date_followed"),
+    )
+    connection.commit()
+    cur.close()
+
+
+def follow_by_hash_tag(amount):
+    navigate_to_url(my_profile_page + f"/{username}")
+    following_count = get_following_count()
+    followers_count = get_follower_count()
+    new_followed = []
+    account_uid_sql = read_sql_file(get_followed_users)
+    query_with_param = account_uid_sql.replace("textToReplace", username)
+    account_uid_df = get_records(connection, query_with_param)
+    account_uid_df = account_uid_df.at[0, "ig_id"]
+    while len(new_followed) < amount - 1:
+        search_user_by_hash(fitness)
+        for i in range(6):
+            follow_user(new_followed)
+            click_next_pic()
+    navigate_to_url(my_profile_page + f"/{username}")
+    new_following_count = get_following_count()
+    updated_user_df = pd.DataFrame(new_followed, index=None, columns=["Followed_users"])
+    current_date_time = pd.Timestamp.now()
+    updated_user_df.insert(1, "date", current_date_time, True)
+    updated_user_df.insert(0, "userID", account_uid_df, False)
+    following_details = {
+        "current_F": new_following_count,
+        "previous_F": following_count,
+        "today_date": current_date_time,
+        "userID": account_uid_df,
+        "follower_N": followers_count
+    }
+    following_details_df = pd.DataFrame(following_details, index=[0])
+    print(following_details_df)
+    print(updated_user_df)
+    follow_details_table_name = 'public."follow_details"'
+    iamfollowing_table_name = 'public."IG_iamfollowing"'
+    output_fd = StringIO()
+    output = StringIO()
+    following_details_df.to_csv(output_fd, sep="\t", header=False, index=False)
+    updated_user_df.to_csv(output, sep="\t", header=False, index=False)
+    output_fd.seek(0)
+    output.seek(0)
+    cur = connection.cursor()
+    cur.copy_from(
+        output_fd,
+        follow_details_table_name,
+        columns=(
+            "current_following_count",
+            "previous_following_count",
+            "date_last_updated",
+            "ig_id",
+            "follower_count"
         ),
     )
     cur.copy_from(
@@ -247,10 +337,9 @@ def follow_by_hash_tag(amount):
 
 def like_by_hash_tag(amount):
     new_liked = 0
-    pbar = tqdm(total=new_liked, desc="total liked", leave=True)
     while new_liked <= amount:
         search_user_by_hash(fitness)
-        for i in range(20):
+        for i in range(5):
             new_liked += like_pic()
             click_next_pic()
     return new_liked
@@ -349,13 +438,15 @@ def un_follow_ig_user():
     account_followed_df = account_uid_df["followed_username"]
     print(account_followed_df)
     # acc = account_uid_df.at[0, "followed_username"]
-    account_userid_df = account_uid_df.at[0, "ig_id"]
+    account_userid_df = account_uid_df.at[1, "ig_id"]
     for user_id in account_followed_df:
         navigate_to_url(my_profile_page + f"/{user_id}")
         browser.implicitly_wait(5)
+        sleep(1)
         follow_buttonc = wait.until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "button"))
         )
+        sleep(1)
         if follow_buttonc.text == "Following":
             follow_buttonc.click()
             unfollowed_list.append(user_id)
@@ -365,12 +456,6 @@ def un_follow_ig_user():
             unfollowing_button.click()
         else:
             print(user_id, "already unfollowed")
-    # unfollowed_list_t = tuple(unfollowed_list)
-    # print(unfollowed_list_t)
-    # unfollowed_list_df = pd.DataFrame(unfollowed_list)
-    # io_list = StringIO()
-    string_list = ",".join(unfollowed_list)
-    # unfollowed_list_df.to_csv(io_list, sep=",", header=False, index=False)
     cur = connection.cursor()
     account_uid_sql = read_sql_file(update_unfollowed)
     account_uid_sql = account_uid_sql.replace("textToReplace", str(account_userid_df))
@@ -385,9 +470,13 @@ def un_follow_ig_user():
 
 
 # un_follow_ig_user()
-follow_by_hash_tag(10)
-like_by_hash_tag(5)
+# follow_by_hash_tag(20)
+follow_by_location(25)
+# like_by_hash_tag(100)
 ## like_comment_follow_user()
+sleep(2)
+browser.close()
+sleep(3)
 browser.quit()
 # disconnect_db(connection)
 
